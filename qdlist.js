@@ -94,16 +94,16 @@ DList.prototype.unlink = function unlink( node ) {
 
 DList.prototype.moveToTail = function moveToTail( node ) {
     nodeUnlink(node);
-    node.prev = this.next;
+    node.prev = this.prev;
     node.next = this;
-    return node.linkin();
+    return nodeLinkin(node);
 }
 
 DList.prototype.moveToHead = function moveToHead( node ) {
     nodeUnlink(node);
     node.prev = this;
     node.next = this.next;
-    return node.linkin();
+    return nodeLinkin(node);
 }
 
 DList.prototype.head = function head( ) {

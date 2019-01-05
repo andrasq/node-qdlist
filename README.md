@@ -1,7 +1,7 @@
 qdlist
 ======
 
-Quick doubly-linked list.
+Quicker doubly-linked list.
 
 Nodes are kept on a circular list, with the list itself being the terminal node.
 

@@ -1,7 +1,7 @@
 {
   "name": "qdlist",
-  "version": "0.0.1",
-  "description": "quick doubly-linked list",
+  "version": "0.9.0",
+  "description": "quicker doubly-linked list",
   "main": "qdlist.js",
   "keywords": ["dlist", "andras", "linked", "list"],
   "repository": { "type": "git", "url": "git://github.com/andrasq/node-qdlist" },

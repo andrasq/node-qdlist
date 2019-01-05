@@ -9,7 +9,7 @@
 
   "scripts": {
     "test": "qnit test-*",
-    "coverage": "nyc -r text -r lcov npm test",
+    "coverage": "nyc -r text -r lcov env NODE_COVERAGE=Y npm test",
     "clean": "rm -rf .nyc_output/ coverage/ npm-debug.log"
   }
 }

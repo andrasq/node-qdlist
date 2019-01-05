@@ -13,8 +13,8 @@
 module.exports = DList;
 
 function Node( prev, next, value ) {
-    this.next = next;   // head, because circular
-    this.prev = prev;   // tail
+    this.next = next;
+    this.prev = prev;
     this.value = value;
     this._linked = false;
 }
@@ -57,10 +57,12 @@ function nodeUnlink( node ) {
     return node;
 }
 
+// the list starts with dl.next (=head), and ends with dl.prev (=tail)
+// Inside the list, prev/next have their intuitive meanings.
 function DList( ) {
     if (!this || this === global) return new DList();
-    this.prev = this;   // head of list, empty if `prev == this`
-    this.next = this;   // tail of list, empty if `next == this`
+    this.prev = this;
+    this.next = this;
     this.value = undefined;
 }
 

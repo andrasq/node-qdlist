@@ -134,8 +134,8 @@ DList.prototype.tail = function tail( ) {
 }
 
 // for testing: return the values in the list, in order
-DList.prototype._dump = function _dump( limit ) {
-    limit = limit || 10;
+DList.prototype.toArray = function toArray( limit ) {
+    limit = limit || Infinity;
 
     var node = this.next;
     var end = this;

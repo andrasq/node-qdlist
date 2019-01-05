@@ -1,0 +1,15 @@
+{
+  "name": "qdlist",
+  "version": "0.0.1",
+  "description": "quick doubly-linked list",
+  "main": "qdlist.js",
+  "keywords": ["dlist", "andras", "linked", "list"],
+  "repository": { "type": "git", "url": "git://github.com/andrasq/node-qdlist" },
+  "readme": "see README.md in the repo",
+
+  "scripts": {
+    "test": "qnit test-*",
+    "coverage": "nyc -r text -r lcov npm test",
+    "clean": "rm -rf .nyc_output/ coverage/ npm-debug.log"
+  }
+}

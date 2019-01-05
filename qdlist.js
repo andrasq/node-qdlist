@@ -12,6 +12,8 @@
 
 module.exports = DList;
 
+/**
+
 function Node( prev, next, value ) {
     this.next = next;
     this.prev = prev;
@@ -36,8 +38,17 @@ Node.prototype.unlink = function unlink( ) {
     return this;
 }
 
+**/
+
 function nodeCreate( prev, next, value ) {
-    return { prev: prev, next: next, value: value, _linked: false };
+    return { prev: prev, next: next, value: value, value2: null, _linked: false };      // 32 byte struct
+    // return { prev: prev, next: next, value: value, _linked: false };                 // 28 byte struct
+}
+
+function nodeCreate2( prev, next, value, value2 ) {
+    return { prev: prev, next: next, value: value, value2: value2, _linked: false };    // 32 byte struct
+    // using the 32-byte struct is 1.5-2% slower, but users of the value2 field run 5% faster, so a net win
+    // using the same struct type is as much as 15% faster than mixing two struct sizes
 }
 
 function nodeLinkin( node ) {
@@ -88,6 +99,14 @@ DList.prototype.pop = function pop( ) {
     return nodeUnlink(this.prev).value;
 }
 
+DList.prototype.push2 = function push2( value1, value2 ) {
+    return nodeLinkin(nodeCreate2(this.prev, this, value1, value2));
+}
+
+DList.prototype.unshift2 = function unshift2( value1, value2 ) {
+    return nodeLinkin(nodeCreate2(this, this.next, value1, value2));
+}
+
 DList.prototype.unlink = function unlink( node ) {
     return nodeUnlink(node);
 }
@@ -112,6 +131,20 @@ DList.prototype.head = function head( ) {
 
 DList.prototype.tail = function tail( ) {
     return this.prev !== this ? this.prev : undefined;
+}
+
+// for testing: return the values in the list, in order
+DList.prototype._dump = function _dump( limit ) {
+    limit = limit || 10;
+
+    var node = this.next;
+    var end = this;
+
+    var vals = [];
+    for (var end = this, node = this.next; node !== end && vals.length < limit; node = node.next) {
+        vals.push(node.value);
+    }
+    return vals;
 }
 
 DList.prototype = toStruct(DList.prototype);

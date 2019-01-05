@@ -24,23 +24,20 @@ Construct a new empty list.  Can be called either as a function or as a construc
     list.toArray();
     // => [ 2, 3, 1 ]
 
-### unshift( value )
-### push( value )
+### unshift( value ),  push( value )
 
 Append a new value to the head / tail of the list, respectively.  Returns the `node` that
 contains the value.  The returned node has properties `value` containing the call argument
 and `value2` with initial contents not specified.
 
-### unshift2( value, value2 )
-### push2( value, value2 )
+### unshift2( value, value2 ),  push2( value, value2 )
 
 Add a new pair of items to the head / tail of the list, respectively.  Returns the `node` that
 contains the item with properties `node.value` set to `value` and `node.value2` set to `value2`.
 
-### shift( )
-### pop( )
+### shift( ),  pop( )
 
-Remove and return the first / last stored value from the list.  Returns `undefined` if the
+Remove and return the first / last value on the list.  Returns `undefined` if the
 list is empty.  If necessary, use `isEmpty` to distinguish the `undefined` value from an
 empty list.
 
@@ -52,15 +49,13 @@ Returns boolean `true` if the list is empty, else `false`.
 
 Remove the node from the list.
 
-### head( )
-### tail( )
+### head( ),  tail( )
 
 Return the first / last node on the list, or `undefined` if the list is empty.
 
 Note that head / tail / push / unshift return nodes, but shift / pop return values.
 
-### moveToHead( node )
-### moveToTail( node )
+### moveToHead( node ),  moveToTail( node )
 
 Move the given node to the head / tail of the list.  The node may be unlinked, or may still
 be on the list.

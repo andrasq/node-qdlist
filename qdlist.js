@@ -133,17 +133,19 @@ DList.prototype.tail = function tail( ) {
     return this.prev !== this ? this.prev : undefined;
 }
 
-// for testing: return the values in the list, in order
-DList.prototype.toArray = function toArray( limit ) {
+DList.prototype.forEach = function forEach( handler, limit ) {
     limit = limit || Infinity;
-
-    var node = this.next;
-    var end = this;
-
-    var vals = [];
-    for (var end = this, node = this.next; node !== end && vals.length < limit; node = node.next) {
-        vals.push(node.value);
+    var n = 0;
+    for (var end = this, node = this.next; node !== end && n++ < limit; node = node.next) {
+        handler(node);
     }
+}
+
+// for testing: return the values in the list, in order,
+// but capped by limit to not be pray to broken linkage cycles
+DList.prototype.toArray = function toArray( limit ) {
+    var vals = [];
+    this.forEach(function(node) { vals.push(node.value) }, limit);
     return vals;
 }
 

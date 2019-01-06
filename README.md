@@ -81,3 +81,5 @@ Changelog
 
 Related Work
 ------------
+
+- [`fast-list`](https://npmjs.org/fast-list)

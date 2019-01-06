@@ -1,6 +1,9 @@
 /**
  * qdlist -- quick doubly-linked list
  *
+ * Copyright (C) 2019 Andras Radics
+ * Licensed under the Apache License, Version  2.0, http://www.apache.org/licenses/LICENSE-2.0
+ *
  * Keeps nodes on a circular doubly-linked list, with the list itself also on the list.
  *
  * 2019-01-04 - AR.

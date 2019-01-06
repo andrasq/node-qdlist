@@ -1,5 +1,8 @@
 qdlist
 ======
+[![Build Status](https://api.travis-ci.org/andrasq/node-qdlist.svg?branch=master)](https://travis-ci.org/andrasq/node-qdlist?branch=master)
+[![Coverage Status](https://codecov.io/github/andrasq/node-qdlist/coverage.svg?branch=master)](https://codecov.io/github/andrasq/node-qdlist?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/andrasq/node-qdlist/badge.svg?branch=master)](https://coveralls.io/github/andrasq/node-qdlist?branch=master)
 
 Quicker doubly-linked list.
 

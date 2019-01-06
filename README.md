@@ -78,6 +78,7 @@ all values.  Useful for testing or inspection.
 Changelog
 ---------
 
+- 0.9.0 - first release version
 - 0.0.1 - first working version
 
 

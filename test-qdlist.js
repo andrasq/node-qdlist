@@ -222,6 +222,7 @@ module.exports = {
     'speed': function(t) {
         var l = qdlist();
         if (process.env.NODE_COVERAGE === 'Y') return t.skip();
+        if (process.env.NODE_SPEED !== 'Y') return t.skip();
 
 for (var j=0; j<3; j++) {
         // for reproducible results restrict to one core, eg `taskset 2 qnit test*`

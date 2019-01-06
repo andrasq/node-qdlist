@@ -5,7 +5,7 @@ qdlist
 
 Quicker doubly-linked list.
 
-Nodes are kept on a circular list, with the list itself being the terminal node.
+Items are kept on a circular linked list, with the list itself being the terminal node.
 
 
 Api
@@ -69,7 +69,7 @@ Call the handler with each node on the list, in list order.
 ### toArray( [limit] )
 
 Return up to `limit` values from the list, in list order.  The default `limit` is Infinity,
-all values.  Useful for testing or inspection.
+return all values.  Useful for testing or inspection.
 
     l.push(1);
     l.push(2);
@@ -80,6 +80,12 @@ Changelog
 
 - 0.9.0 - first release version
 - 0.0.1 - first working version
+
+
+Todo
+----
+
+- `fromArray` method to initialize / reset list contents
 
 
 Related Work

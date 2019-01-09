@@ -105,3 +105,4 @@ Related Work
 ------------
 
 - [`fast-list`](https://npmjs.org/fast-list)
+- [`yallist`](https://npmjs.org/yallist)

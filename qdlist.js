@@ -124,6 +124,25 @@ DList.prototype.toArray = function toArray( limit ) {
     return vals;
 }
 
+DList.prototype.fromArray = function fromArray( array, append ) {
+    if (!append) this.prev = this.next = this;
+    for (var i = 0; i < array.length; i++) {
+        this.push(array[i]);
+    }
+    return this;
+}
+
+// reverse the list by head and tail, then swapping prev/next in each node
+DList.prototype.reverse = function reverse( ) {
+    swapPrevNext(this);
+    for (var node = this.next, prev = node.prev; node !== this; node = prev, prev = node.prev) {
+        swapPrevNext(node);
+    }
+    return this;
+
+    function swapPrevNext(node) { var tmp = node.prev; node.prev = node.next; node.next = tmp }
+}
+
 DList.prototype = toStruct(DList.prototype);
 function toStruct( obj ) { return toStruct.prototype = obj }
 

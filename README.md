@@ -65,6 +65,7 @@ be on the list.
 ### forEach( handler(node) )
 
 Call the handler with each node on the list, in list order.
+The values are accessible as `node.value` and `node.value2`.
 
 ### toArray( [limit] )
 
@@ -75,9 +76,21 @@ return all values.  Useful for testing or inspection.
     l.push(2);
     l.toArray();        // => [1, 2]
 
+### fromArray( array [,append] )
+
+Set the linked-list contents from the array.  If `append` is truthy the values are appended
+to the list, else the existing list contents are replaced with the values from the array.
+
+### reverse( )
+
+Reorder the nodes on the list so that the old tail becomes the first element and the old
+head becomes the last.
+
+
 Changelog
 ---------
 
+- 0.10.0 - `fromArray` method, `reverse` method
 - 0.9.0 - first release version
 - 0.0.1 - first working version
 
@@ -85,7 +98,7 @@ Changelog
 Todo
 ----
 
-- `fromArray` method to initialize / reset list contents
+- `toArray` offset,limit mode
 
 
 Related Work

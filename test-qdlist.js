@@ -74,6 +74,36 @@ module.exports = {
         t.done();
     },
 
+    'fromArray': function(t) {
+        var l = qdlist();
+        l.fromArray([1, 2, 3]);
+        t.deepEqual(l.toArray(), [1, 2, 3]);
+        l.fromArray([4]);
+        t.deepEqual(l.toArray(), [4]);
+        l.fromArray([]);
+        t.deepEqual(l.toArray(), []);
+
+        l.fromArray([1, 2]);
+        l.fromArray([3], true);
+        l.fromArray([4, 5], true);
+        t.deepEqual(l.toArray(), [1, 2, 3, 4, 5]);
+
+        t.done();
+    },
+
+    'reverse': function(t) {
+        var l = qdlist();
+        l.fromArray([1, 2, 3, 4]);
+        t.deepEqual(l.reverse().toArray(), [4, 3, 2, 1]);
+        l.fromArray([1, 2, 3]);
+        t.deepEqual(l.reverse().toArray(), [3, 2, 1]);
+        l.fromArray([1]);
+        t.deepEqual(l.reverse().toArray(), [1]);
+        l.fromArray([]);
+        t.deepEqual(l.reverse().toArray(), []);
+        t.done();
+    },
+
     'forEach': function(t) {
         var l = qdlist();
         var nodes = [];

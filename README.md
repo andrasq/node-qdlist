@@ -84,7 +84,8 @@ to the list, else the existing list contents are replaced with the values from t
 ### reverse( )
 
 Reorder the nodes on the list so that the old tail becomes the first element and the old
-head becomes the last.
+head becomes the last.  `reverse` is fairly efficient, it does not create objects just
+rearranges the linkages.
 
 
 Changelog

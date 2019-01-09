@@ -15,34 +15,6 @@
 
 module.exports = DList;
 
-/**
-
-function Node( prev, next, value ) {
-    this.next = next;
-    this.prev = prev;
-    this.value = value;
-    this._linked = false;
-}
-
-Node.prototype.linkin = function linkin( ) {
-    this.prev.next = this;
-    this.next.prev = this;
-    this._linked = true;
-    return this;
-}
-
-Node.prototype.unlink = function unlink( ) {
-    if (this._linked) {
-        var prev = this.prev, next = this.next;
-        prev.next = next;
-        next.prev = prev;
-        this._linked = false;
-    }
-    return this;
-}
-
-**/
-
 function nodeCreate( prev, next, value ) {
     return { prev: prev, next: next, value: value, value2: null, _linked: false };      // 32 byte struct
     // return { prev: prev, next: next, value: value, _linked: false };                 // 28 byte struct

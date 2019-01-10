@@ -12,42 +12,50 @@ var qlist = require('qlist');
 
 var keys = new Array(nitems); for (var i=0; i<nitems; i++) keys[i] = 'hash-key-' + i;
 
-qtimeit.bench.timeGoal = .1;
+qtimeit.bench.timeGoal = .35;
 qtimeit.bench.showRunDetails = false;
 qtimeit.bench.visualize = true;
-qtimeit.bench.baselineAvg = 200000;
+qtimeit.bench.baselineAvg = 200000 * nitems;
+qtimeit.bench.opsPerTest = nitems*2;
 //qtimeit.bench.forkTests = true;
 for (var i=0; i<5; i++) {
+    qtimeit.bench.showPlatformInfo = (i == 1);
     qtimeit.bench({
-// note: adding qlist to the benchmarks throws off the results of the others
-//        'qlist queue str': function(){ testQueueK(new qlist()) },
-//        'qlist stack str': function(){ testStackK(new qlist()) },
+/**
+        'qlist push/shift': function(){ testQueueK(new qlist()) },
+        'qlist push/pop': function(){ testStackK(new qlist()) },
+        'qlist push/unshift/shift/pop': function() { testList(new qlist()) },
+**/
 
-//        '[] queue num': function() { testQueue([]) },
-//        '[] stack num': function() { testStack([]) },
-        '[] queue str': function() { testQueueK([]) },
-        '[] stack str': function() { testStackK([]) },
+//        '[] push/shift num': function() { testQueue([]) },
+//        '[] push/pop num': function() { testStack([]) },
+        '[] push/shift': function() { testQueueK([]) },
+        '[] push/pop': function() { testStackK([]) },
+        '[] push/unshift/shift/pop': function() { testList([]) },
+        //'Array push/unshift/shift/pop': function() { testList(new Array()) }, // same as []
 
-//        'yallist queue num': function() { testQueue(new yallist()) },
-//        'yallist stack num': function() { testStack(new yallist()) },
-        'yallist queue str': function() { testQueueK(new yallist()) },
-        'yallist stack str': function() { testStackK(new yallist()) },
-        'yallist set/get': function() { testList(new yallist()) },
+/**
+// yallist halves the measured push/pop and push/shift throughput of all lists
+//        'yallist push/shift num': function() { testQueue(new yallist()) },
+//        'yallist push/pop num': function() { testStack(new yallist()) },
+        'yallist push/shift': function() { testQueueK(new yallist()) },
+        'yallist push/pop': function() { testStackK(new yallist()) },
+        'yallist push/unshift/shift/pop': function() { testList(new yallist()) },
+/**/
 
-//        'fast-list queue num': function() { testQueue(new fastlist()) },
-//        'fast-list stack num': function() { testStack(new fastlist()) },
-        'fast-list queue str': function() { testQueueK(new fastlist()) },
-        'fast-list stack str': function() { testStackK(new fastlist()) },
-        'fast-list set/get': function() { testList(new fastlist()) },
+//        'fast-list push/shift num': function() { testQueue(new fastlist()) },
+//        'fast-list push/pop num': function() { testStack(new fastlist()) },
+        'fast-list push/shift': function() { testQueueK(new fastlist()) },
+        'fast-list push/pop': function() { testStackK(new fastlist()) },
+        'fast-list push/unshift/shift/pop': function() { testList(new fastlist()) },
 
-//        'qdlist queue num': function() { testQueue(qdlist()) },
-//        'qdlist stack num': function() { testStack(qdlist()) },
-        'qdlist queue str': function() { testQueueK(qdlist()) },
-        'qdlist stack str': function() { testStackK(qdlist()) },
-        'qdlist set/get': function() { testList(qdlist()) },
+//        'qdlist push/shift num': function() { testQueue(qdlist()) },
+//        'qdlist push/pop num': function() { testStack(qdlist()) },
+        'qdlist push/shift': function() { testQueueK(qdlist()) },
+        'qdlist push/pop': function() { testStackK(qdlist()) },
+        'qdlist push/unshift/shift/pop': function() { testList(qdlist()) },
 
     })
-    qtimeit.bench.showPlatformInfo = false;
     console.log("");
 }
 
@@ -80,13 +88,8 @@ function testStackK( l ) {
 }
 
 function testList( l ) {
-    for (var i=0; i<keys.length>>1; i++) { l.unshift(i); l.push(i); }
-    for (var i=0; i<keys.length>>1; i++) { l.push(keys[i]); }
-    for (var i=0; i<keys.length>>1; i++) { l.shift(); l.pop() }
-    for (var i=0; i<keys.length>>1; i++) { l.pop() }
-}
-
-function testListOverflow( l ) {
-    for (var i=0; i<keys.length; i++) { l.push(keys[i]); }
-    for (var i=0; i<keys.length; i++) { l.pop() }
+    for (var i=0; i<nitems/4; i++) { l.unshift(i); l.push(i); }
+    for (var i=0; i<nitems/2; i++) { l.push(keys[i]); }
+    for (var i=0; i<nitems/4; i++) { l.shift(); l.pop() }
+    for (var i=0; i<nitems/2; i++) { l.pop() }
 }

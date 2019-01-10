@@ -91,6 +91,7 @@ rearranges the linkages.
 Changelog
 ---------
 
+- 0.10.1 - faster `toArray`
 - 0.10.0 - `fromArray` method, `reverse` method
 - 0.9.0 - first release version
 - 0.0.1 - first working version

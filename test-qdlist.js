@@ -71,6 +71,9 @@ module.exports = {
         t.deepEqual(l.toArray(), [ 2, 1, 3 ]);
         l.unshift2(4, 5);
         t.deepEqual(l.toArray(), [ 4, 2, 1, 3 ]);
+        t.deepEqual(l.toArray(2), [ 4, 2 ]);
+        t.deepEqual(l.toArray(1), [ 4 ]);
+        t.deepEqual(l.toArray(0), [ ]);
         t.done();
     },
 

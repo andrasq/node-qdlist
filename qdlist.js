@@ -119,8 +119,11 @@ DList.prototype.forEach = function forEach( handler, limit ) {
 // for testing: return the values in the list, in order,
 // but capped by limit to not be pray to broken linkage cycles
 DList.prototype.toArray = function toArray( limit ) {
+    limit = limit >= 0 ? limit : Infinity;
     var vals = [];
-    this.forEach(function(node) { vals.push(node.value) }, limit);
+    for (var node = this.next; node !== this && limit-- > 0; node = node.next) {
+        vals.push(node.value);
+    }
     return vals;
 }
 

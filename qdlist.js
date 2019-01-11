@@ -62,7 +62,7 @@ DList.prototype.push = function push( value ) {
 }
 
 DList.prototype.shift = function shift( ) {
-    return nodeUnlink(this.next).value;
+    return this.next === this ? undefined : nodeUnlink(this.next).value;
 }
 
 DList.prototype.unshift = function unshift( value ) {
@@ -71,7 +71,7 @@ DList.prototype.unshift = function unshift( value ) {
 }
 
 DList.prototype.pop = function pop( ) {
-    return nodeUnlink(this.prev).value;
+    return this.prev === this ? undefined : nodeUnlink(this.prev).value;
 }
 
 DList.prototype.push2 = function push2( value1, value2 ) {

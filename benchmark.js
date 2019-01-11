@@ -58,6 +58,9 @@ for (var i=0; i<5; i++) {
 
 //        'qslist push/shift': function() { testQueueK(qslist()) },
 
+        'fast-list short': function() { testShort(new fastlist()) },
+        'qdlist short': function() { testShort(qdlist()) },
+
     })
     console.log("");
 }
@@ -95,4 +98,9 @@ function testList( l ) {
     for (var i=0; i<nitems/2; i++) { l.push(keys[i]); }
     for (var i=0; i<nitems/4; i++) { l.shift(); l.pop() }
     for (var i=0; i<nitems/2; i++) { l.pop() }
+}
+
+function testShort( l ) {
+    for (var i=0; i<nitems/4; i++) { l.shift(); l.push(i); l.shift(); l.shift(); }
+    for (var i=0; i<nitems/4; i++) { l.pop(); l.unshift(i); l.pop(); l.pop(); }
 }

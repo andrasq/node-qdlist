@@ -20,6 +20,7 @@ qtimeit.bench.baselineAvg = 200000 * nitems;
 qtimeit.bench.opsPerTest = nitems*2;
 //qtimeit.bench.forkTests = true;
 for (var i=0; i<5; i++) {
+    if (i > 0) console.log("");
     qtimeit.bench.showPlatformInfo = (i == 1);
     qtimeit.bench({
 /**
@@ -62,7 +63,6 @@ for (var i=0; i<5; i++) {
         'qdlist short': function() { testShort(qdlist()) },
 
     })
-    console.log("");
 }
 
 function testQueue( l ) {

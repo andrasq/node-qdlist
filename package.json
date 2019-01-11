@@ -1,6 +1,6 @@
 {
   "name": "qdlist",
-  "version": "0.10.1",
+  "version": "0.10.2",
   "description": "quicker doubly-linked list",
   "main": "qdlist.js",
   "license": "Apache-2.0",

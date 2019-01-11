@@ -57,8 +57,8 @@ DList.prototype.isEmpty = function isEmpty( ) {
 }
 
 DList.prototype.push = function push( value ) {
-    var node = nodeLinkin(nodeCreate(this.prev, this, value));
-    return node;
+    var node = nodeCreate(this.prev, this, value);
+    return nodeLinkin(node);
 }
 
 DList.prototype.shift = function shift( ) {
@@ -66,8 +66,8 @@ DList.prototype.shift = function shift( ) {
 }
 
 DList.prototype.unshift = function unshift( value ) {
-    var node = nodeLinkin(nodeCreate(this, this.next, value));
-    return node;
+    var node = nodeCreate(this, this.next, value);
+    return nodeLinkin(node);
 }
 
 DList.prototype.pop = function pop( ) {
@@ -75,11 +75,13 @@ DList.prototype.pop = function pop( ) {
 }
 
 DList.prototype.push2 = function push2( value1, value2 ) {
-    return nodeLinkin(nodeCreate2(this.prev, this, value1, value2));
+    var node = nodeCreate2(this.prev, this, value1, value2);
+    return nodeLinkin(node);
 }
 
 DList.prototype.unshift2 = function unshift2( value1, value2 ) {
-    return nodeLinkin(nodeCreate2(this, this.next, value1, value2));
+    var node = nodeCreate2(this, this.next, value1, value2);
+    return nodeLinkin(node);
 }
 
 

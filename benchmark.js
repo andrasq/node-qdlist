@@ -1,6 +1,6 @@
 'use strict'
 
-// npm install qtimeit fast-list yallist qlist
+// npm install qtimeit fast-list yallist qlist qslist
 
 var nitems = 100;
 
@@ -9,6 +9,7 @@ var fastlist = require('fast-list');
 var qdlist = require('./');
 var yallist = require('yallist');
 var qlist = require('qlist');
+var qslist = function() { return new (require('qslist')).SList() };
 
 var keys = new Array(nitems); for (var i=0; i<nitems; i++) keys[i] = 'hash-key-' + i;
 
@@ -54,6 +55,8 @@ for (var i=0; i<5; i++) {
         'qdlist push/shift': function() { testQueueK(qdlist()) },
         'qdlist push/pop': function() { testStackK(qdlist()) },
         'qdlist push/unshift/shift/pop': function() { testList(qdlist()) },
+
+//        'qslist push/shift': function() { testQueueK(qslist()) },
 
     })
     console.log("");

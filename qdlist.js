@@ -17,29 +17,24 @@ module.exports = DList;
 
 
 function nodeCreate( prev, next, value ) {
-    return { prev: prev, next: next, value: value, value2: null, _linked: true };       // 32 byte struct
-    // return { prev: prev, next: next, value: value, _linked: false };                 // 28 byte struct
+    return { prev: prev, next: next, value: value, value2: null };
 }
 
 function nodeCreate2( prev, next, value, value2 ) {
-    return { prev: prev, next: next, value: value, value2: value2, _linked: true };     // 32 byte struct
-    // using the 32-byte struct is 1.5-2% slower, but users of the value2 field run 5% faster, so a net win
-    // using the same struct type is as much as 15% faster than mixing two struct sizes
+    return { prev: prev, next: next, value: value, value2: value2 };
 }
 
 function nodeLinkin( node ) {
     node.prev.next = node;
     node.next.prev = node;
-    //node._linked = true;      // update manually as needed
     return node;
 }
 
 function nodeUnlink( node ) {
-    // only ever called on linked nodes
     var prev = node.prev, next = node.next;
     prev.next = next;
     next.prev = prev;
-    node._linked = false;
+    node.next = null;
     return node;
 }
 
@@ -86,14 +81,13 @@ DList.prototype.unshift2 = function unshift2( value1, value2 ) {
 
 
 DList.prototype.unlink = function unlink( node ) {
-    return node._linked ? nodeUnlink(node) : node;
+    return node.next ? nodeUnlink(node) : node;
 }
 
 DList.prototype.moveToTail = function moveToTail( node ) {
     DList.prototype.unlink(node);
     node.prev = this.prev;
     node.next = this;
-    node._linked = true;
     return nodeLinkin(node);
 }
 
@@ -101,7 +95,6 @@ DList.prototype.moveToHead = function moveToHead( node ) {
     DList.prototype.unlink(node);
     node.prev = this;
     node.next = this.next;
-    node._linked = true;
     return nodeLinkin(node);
 }
 

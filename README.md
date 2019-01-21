@@ -8,8 +8,8 @@ Quicker doubly-linked list.
 Items are kept on a circular linked list, with the list itself being the terminal node.
 
 
-Api
----
+API - List operations
+---------------------
 
 ### qdlist( )
 
@@ -29,8 +29,10 @@ Construct a new empty list.  Can be called either as a function or as a construc
 ### unshift( value ),  push( value )
 
 Append a new value to the head / tail of the list, respectively.  Returns the `node` that
-contains the value.  The returned node has properties `value` containing the call argument
-and `value2` with initial contents not specified.
+contains the value.  The returned node has properties `prev`, `next`, `value` containing
+the call argument and `value2` with initial contents not specified.
+
+Note that push / unshift / head / tail return nodes, but shift / pop return values.
 
 ### unshift2( value, value2 ),  push2( value, value2 )
 
@@ -46,26 +48,6 @@ empty list.
 ### isEmpty( )
 
 Returns boolean `true` if the list is empty, else `false`.
-
-### unlink( node )
-
-Remove the node from the list.
-
-### head( ),  tail( )
-
-Return the first / last node on the list, or `undefined` if the list is empty.
-
-Note that head / tail / push / unshift return nodes, but shift / pop return values.
-
-### moveToHead( node ),  moveToTail( node )
-
-Move the given node to the head / tail of the list.  The node may be unlinked, or may still
-be on the list.
-
-### forEach( handler(node) )
-
-Call the handler with each node on the list, in list order.
-The values are accessible as `node.value` and `node.value2`.
 
 ### toArray( [limit] )
 
@@ -88,9 +70,52 @@ head becomes the last.  `reverse` is fairly efficient, it does not create object
 rearranges the linkages.
 
 
+API - Node Operations
+---------------------
+
+Linkage is via `node`s with properties `prev` and `next` that point to the previous and next
+nodes on the list, respectively.  The list is circular, the list itself linking the first
+node to the last.  A node on the list has `next` set, when unlinked `next` is cleared.
+`prev` of the first node and `next` of the last node point to the list.
+
+    +----------------------------------------------------------------+
+    |   +-------+     +-------+     +-------+            +-------+   |
+    |   |List:  |     |node1: |     |node2: |    ...     |nodeN: |   |
+    +---| .prev |<----| .prev |<----| .prev |<-----------| .prev |<--+
+    +-->| .next |---->| .next |---->| .next |----------->| .next |---+
+    |   +-------+     +-------+     +-------+            +-------+   |
+    +----------------------------------------------------------------+
+
+    Node: {
+        prev: null,
+        next: null,
+        // value
+        // value2
+    }
+
+### unlink( node )
+
+Remove the node from the list if linked.  Returns the node.
+
+### head( ),  tail( )
+
+Return the first / last node on the list, or `undefined` if the list is empty.
+
+### moveToHead( node ),  moveToTail( node )
+
+Move the given node to the head / tail of the list.  The node may be unlinked, or may still
+be on the list.
+
+### forEach( handler(node) )
+
+Call the handler with each node on the list, in list order.
+The values are accessible as `node.value` and `node.value2`.
+
+
 Changelog
 ---------
 
+- 0.10.3 - speed up by simplifying node layout
 - 0.10.2 - faster `pop`, `shift`
 - 0.10.1 - faster `toArray`
 - 0.10.0 - `fromArray` method, `reverse` method

@@ -74,17 +74,20 @@ API - Node Operations
 ---------------------
 
 Linkage is via `node`s with properties `prev` and `next` that point to the previous and next
-nodes on the list, respectively.  The list is circular, the list itself linking the first
-node to the last.  A node on the list has `next` set, when unlinked `next` is cleared.
-`prev` of the first node and `next` of the last node point to the list.
+nodes on the list, respectively.  The list is circular, the list itself connecting the first
+node to the last:  `prev` of the first node and `next` of the last node point to the list.
+A node on the list has `node.next` set, when unlinked `node.next` is cleared.
 
-    +----------------------------------------------------------------+
-    |   +-------+     +-------+     +-------+            +-------+   |
-    |   |List:  |     |node1: |     |node2: |    ...     |nodeN: |   |
-    +---| .prev |<----| .prev |<----| .prev |<-----------| .prev |<--+
-    +-->| .next |---->| .next |---->| .next |----------->| .next |---+
-    |   +-------+     +-------+     +-------+            +-------+   |
-    +----------------------------------------------------------------+
+        +-------+
+        |List:  |
+        | .prev |-------------------------------------------+
+        |       |                                           V
+        |       |     +-------+     +-------+            +-------+
+        |       |     |node1: |     |node2: |    ...     |nodeN: |
+        |       |<----| .prev |<----| .prev |<-----------| .prev |
+    +-->| .next |---->| .next |---->| .next |----------->| .next |--+
+    |   +-------+     +-------+     +-------+            +-------+  |
+    +---------------------------------------------------------------+
 
     Node: {
         prev: null,

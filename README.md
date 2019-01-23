@@ -106,8 +106,8 @@ Return the first / last node on the list, or `undefined` if the list is empty.
 
 ### moveToHead( node ),  moveToTail( node )
 
-Move the given node to the head / tail of the list.  The node may be unlinked, or may still
-be on the list.
+Move the given node to the head / tail of the list.  The node can be still on the list, else
+must be unlinked (with `next` cleared).
 
 ### forEach( handler(node) )
 

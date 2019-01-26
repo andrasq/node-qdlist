@@ -13,8 +13,8 @@
 
 'use strict';
 
-module.exports = DList;
-module.exports.fromArray = function fromArray( array ) { return DList().fromArray(array) };
+module.exports = QDList;
+module.exports.fromArray = function fromArray( array ) { return QDList().fromArray(array) };
 
 
 function nodeCreate( prev, next, value ) {
@@ -41,89 +41,89 @@ function nodeUnlink( node ) {
 
 // the list starts with dl.next (=head), and ends with dl.prev (=tail)
 // Inside the list, prev/next have their intuitive meanings.
-function DList( ) {
-    if (!this || this === global) return new DList();
+function QDList( ) {
+    if (!this || this === global) return new QDList();
     this.prev = this;
     this.next = this;
     this.value = undefined;
 }
 
-DList.prototype.isEmpty = function isEmpty( ) {
+QDList.prototype.isEmpty = function isEmpty( ) {
     return this.next === this;
 }
 
-DList.prototype.push = function push( value ) {
+QDList.prototype.push = function push( value ) {
     var node = nodeCreate(this.prev, this, value);
     return nodeLinkin(node);
 }
 
-DList.prototype.shift = function shift( ) {
+QDList.prototype.shift = function shift( ) {
     return this.next === this ? undefined : nodeUnlink(this.next).value;
 }
 
-DList.prototype.unshift = function unshift( value ) {
+QDList.prototype.unshift = function unshift( value ) {
     var node = nodeCreate(this, this.next, value);
     return nodeLinkin(node);
 }
 
-DList.prototype.pop = function pop( ) {
+QDList.prototype.pop = function pop( ) {
     return this.prev === this ? undefined : nodeUnlink(this.prev).value;
 }
 
-DList.prototype.push2 = function push2( value1, value2 ) {
+QDList.prototype.push2 = function push2( value1, value2 ) {
     var node = nodeCreate2(this.prev, this, value1, value2);
     return nodeLinkin(node);
 }
 
-DList.prototype.unshift2 = function unshift2( value1, value2 ) {
+QDList.prototype.unshift2 = function unshift2( value1, value2 ) {
     var node = nodeCreate2(this, this.next, value1, value2);
     return nodeLinkin(node);
 }
 
 
-DList.prototype.unlink = function unlink( node ) {
+QDList.prototype.unlink = function unlink( node ) {
     return node.next ? nodeUnlink(node) : node;
 }
 
-DList.prototype.linkin = function linkin( node, parent ) {
+QDList.prototype.linkin = function linkin( node, parent ) {
     this.unlink(node);
     node.prev = parent;
     node.next = parent.next;
     return nodeLinkin(node);
 }
 
-DList.prototype.moveToTail = function moveToTail( node ) {
+QDList.prototype.moveToTail = function moveToTail( node ) {
     return this.linkin(node, this.prev);
 }
 
-DList.prototype.moveToHead = function moveToHead( node ) {
+QDList.prototype.moveToHead = function moveToHead( node ) {
     return this.linkin(node, this);
 }
 
-DList.prototype.findAtPosition = function findPrevious( ix ) {
+QDList.prototype.findAtPosition = function findPrevious( ix ) {
     if (ix < 0) return null;
     for (var node = this.next; --ix >= 0 && node != this; node = node.next) ;
     return node === this ? null : node;
 }
 
-DList.prototype.findPrevious = function findPrevious( ix ) {
+QDList.prototype.findPrevious = function findPrevious( ix ) {
     var node = this.findAtPosition(ix);
     return node ? node.prev : (ix <= 0 ? this : this.prev);
 }
 
-DList.prototype.moveToPosition = function moveToPosition( node, ix ) {
+QDList.prototype.moveToPosition = function moveToPosition( node, ix ) {
     return this.linkin(this.unlink(node), this.findPrevious(ix));
 }
 
-DList.prototype.head = function head( ) {
+QDList.prototype.head = function head( ) {
     return this.next !== this ? this.next : undefined;
 }
 
-DList.prototype.tail = function tail( ) {
+QDList.prototype.tail = function tail( ) {
     return this.prev !== this ? this.prev : undefined;
 }
 
-DList.prototype.forEach = function forEach( handler, limit ) {
+QDList.prototype.forEach = function forEach( handler, limit ) {
     limit = limit || Infinity;
     var n = 0;
     for (var end = this, node = this.next; node !== end && n++ < limit; node = node.next) {
@@ -133,7 +133,7 @@ DList.prototype.forEach = function forEach( handler, limit ) {
 
 // for testing: return the values in the list, in order,
 // but capped by limit to not be pray to broken linkage cycles
-DList.prototype.toArray = function toArray( limit ) {
+QDList.prototype.toArray = function toArray( limit ) {
     limit = limit >= 0 ? limit : Infinity;
     var vals = [];
     for (var node = this.next; node !== this && limit-- > 0; node = node.next) {
@@ -142,7 +142,7 @@ DList.prototype.toArray = function toArray( limit ) {
     return vals;
 }
 
-DList.prototype.fromArray = function fromArray( array, append ) {
+QDList.prototype.fromArray = function fromArray( array, append ) {
     if (!append) this.prev = this.next = this;
     for (var i = 0; i < array.length; i++) {
         this.push(array[i]);
@@ -151,7 +151,7 @@ DList.prototype.fromArray = function fromArray( array, append ) {
 }
 
 // reverse the list by head and tail, then swapping prev/next in each node
-DList.prototype.reverse = function reverse( ) {
+QDList.prototype.reverse = function reverse( ) {
     swapPrevNext(this);
     for (var node = this.next, prev = node.prev; node !== this; node = prev, prev = node.prev) {
         swapPrevNext(node);
@@ -163,10 +163,10 @@ DList.prototype.reverse = function reverse( ) {
 
 try {
     // load ES6 methods from a separate file to catch parse errors
-    require('./es6').setMethods(DList.prototype);
+    require('./es6').setMethods(QDList.prototype);
 } catch (err) {}
 
-DList.prototype = toStruct(DList.prototype);
+QDList.prototype = toStruct(QDList.prototype);
 function toStruct( obj ) { return toStruct.prototype = obj }
 
 })(module);

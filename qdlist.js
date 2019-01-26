@@ -85,7 +85,7 @@ DList.prototype.unlink = function unlink( node ) {
 }
 
 DList.prototype.linkin = function linkin( parent, node ) {
-    DList.prototype.unlink(node);
+    this.unlink(node);
     node.prev = parent;
     node.next = parent.next;
     return nodeLinkin(node);
@@ -97,6 +97,18 @@ DList.prototype.moveToTail = function moveToTail( node ) {
 
 DList.prototype.moveToHead = function moveToHead( node ) {
     return this.linkin(this, node);
+}
+
+DList.prototype.findPrevious = function findPrevious( ix ) {
+    if (ix <= 0) return this;
+    for (var node = this.next; --ix > 0 && node != this; node = node.next) ;
+    return node === this ? this.prev : node;
+}
+
+DList.prototype.moveToPosition = function moveToPosition( node, ix ) {
+    this.unlink(node);
+    var parent = this.findPrevious(ix);
+    return this.linkin(parent, node);
 }
 
 DList.prototype.head = function head( ) {

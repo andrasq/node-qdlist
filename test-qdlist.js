@@ -257,6 +257,88 @@ module.exports = {
         t.done();
     },
 
+    'findPrevious': function(t) {
+        var list = qdlist();
+        t.equal(list.findPrevious(-100), list);
+        t.equal(list.findPrevious(0), list);
+        t.equal(list.findPrevious(1), list);
+        t.equal(list.findPrevious(100), list);
+
+        var node1 = list.push(1);
+        t.equal(list.findPrevious(0), list);
+        t.equal(list.findPrevious(1), node1);
+        t.equal(list.findPrevious(2), node1);
+        t.equal(list.findPrevious(100), node1);
+
+        var node2 = list.push(2);
+        t.equal(list.findPrevious(0), list);
+        t.equal(list.findPrevious(1), node1);
+        t.equal(list.findPrevious(2), node2);
+        t.equal(list.findPrevious(3), node2);
+        t.equal(list.findPrevious(100), node2);
+
+        var node3 = list.push(3);
+        t.equal(list.findPrevious(0), list);
+        t.equal(list.findPrevious(1), node1);
+        t.equal(list.findPrevious(2), node2);
+        t.equal(list.findPrevious(3), node3);
+        t.equal(list.findPrevious(4), node3);
+        t.equal(list.findPrevious(100), node3);
+        t.equal(list.findPrevious(Infinity), node3);
+
+        t.done();
+    },
+
+    'moveToPosition': function(t) {
+        var list;
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head(), 0);
+        t.deepEqual(list.toArray(), [1,2,3,4]);
+        list.moveToPosition(list.head(), -100);
+        t.deepEqual(list.toArray(), [1,2,3,4]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head(), 1);
+        t.deepEqual(list.toArray(), [2,1,3,4]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head(), 2);
+        t.deepEqual(list.toArray(), [2,3,1,4]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head(), 3);
+        t.deepEqual(list.toArray(), [2,3,4,1]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head().next, 0);
+        t.deepEqual(list.toArray(), [2,1,3,4]);
+        list.moveToPosition(list.head().next, -100);
+        t.deepEqual(list.toArray(), [1,2,3,4]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head().next, 1);
+        t.deepEqual(list.toArray(), [1,2,3,4]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head().next, 2);
+        t.deepEqual(list.toArray(), [1,3,2,4]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head().next, 3);
+        t.deepEqual(list.toArray(), [1,3,4,2]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head().next, 99);
+        t.deepEqual(list.toArray(), [1,3,4,2]);
+
+        list = qdlist().fromArray([1,2,3,4]);
+        list.moveToPosition(list.head().next, -99);
+        t.deepEqual(list.toArray(), [2,1,3,4]);
+
+        t.done();
+    },
+
     'speed': function(t) {
         var l = qdlist();
         if (process.env.NODE_COVERAGE === 'Y') return t.skip();

@@ -115,7 +115,30 @@ Return the first / last node on the list, or `undefined` if the list is empty.
 ### moveToHead( node ),  moveToTail( node )
 
 Move the given node to the head / tail of the list.  These are just convenience functions
-that call `linkin()`
+that call `linkin()`.
+
+### findPrevious( nth )
+
+Return the node whose `.next` points to the `nth` node on the list.  Returns the list itself
+as preceding the `0`-th node, and the tail node as preceding all `nth` past the end of the list.
+
+Unlike the other linked list operations that are O(1), `findPrevious` walks the list and
+runs in O(n) time.
+
+    // insert `node` into the `list` at position `n`
+    const parent = list.findPrevious(n);
+    list.linkin(parent, node);
+
+### moveToPosition( node, nth )
+
+Move the given node to be the `nth` item on the list.  This is a convenience function around
+`findPrevious()` and `linkin()`.
+
+Note that when moving a node on the same list, the node is unlinked before finding the
+previous to `nth`, ie the positions are numbered without including the `node` being moved.
+This alaways places the node in position `n`, but not always with the the expected previous
+and next neighboring nodes.  For example, moving node A to position 2 in [0:A, B, 2:C, D]
+will result in [0:B, C, A, D].
 
 ### forEach( handler(node) )
 
@@ -126,7 +149,7 @@ The values are accessible as `node.value` and `node.value2`.
 Changelog
 ---------
 
-- 0.11.0 - expose `linkin()` method
+- 0.11.0 - expose `linkin()` method, new `findPrevious` and `moveToPosition` methods
 - 0.10.3 - speed up by simplifying node layout
 - 0.10.2 - faster `pop`, `shift`
 - 0.10.1 - faster `toArray`

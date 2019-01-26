@@ -14,6 +14,7 @@
 'use strict';
 
 module.exports = DList;
+module.exports.fromArray = function fromArray( array ) { return DList().fromArray(array) };
 
 
 function nodeCreate( prev, next, value ) {

@@ -99,6 +99,13 @@ module.exports = {
         t.done();
     },
 
+    'fromArray factory method': function(t) {
+        t.deepEqual(qdlist.fromArray([]).toArray(), []);
+        t.deepEqual(qdlist.fromArray([1]).toArray(), [1]);
+        t.deepEqual(qdlist.fromArray([1,2,3,4]).toArray(), [1,2,3,4]);
+        t.done();
+    },
+
     'reverse': function(t) {
         var l = qdlist();
         l.fromArray([1, 2, 3, 4]);

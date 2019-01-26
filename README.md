@@ -29,6 +29,11 @@ Construct a new empty list.  Can be called either as a function or as a construc
     list.toArray();
     // => [ 2, 3, 1 ]
 
+### qdlist.fromArray( array )
+
+Construct a new list initialized to the contents of the array.  This is a convenience
+function implemented as `qdlist().fromArray(array)`.
+
 ### unshift( value ),  push( value )
 
 Append a new value to the head / tail of the list, respectively.  Returns the `node` that
@@ -158,7 +163,7 @@ The nodes on the list are also iterable with `for..of`.
 Changelog
 ---------
 
-- 0.12.0 - support `for..of` iteration
+- 0.12.0 - support `for..of` iteration, `qdlist.fromArray` builder
 - 0.11.0 - expose `linkin()` method, new `findAtPosition`, `findPrevious` and `moveToPosition` methods
 - 0.10.3 - speed up by simplifying node layout
 - 0.10.2 - faster `pop`, `shift`

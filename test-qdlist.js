@@ -405,3 +405,7 @@ for (var j=0; j<3; j++) {
         t.done();
     },
 }
+
+try {
+    module.exports.es6 = require('./test-es6');
+} catch (err) {}

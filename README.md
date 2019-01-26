@@ -152,10 +152,13 @@ will result in [0:B, C, A, D].
 Call the handler with each node on the list, in list order.
 The values are accessible as `node.value` and `node.value2`.
 
+The nodes on the list are also iterable with `for..of`.
+
 
 Changelog
 ---------
 
+- 0.12.0 - support `for..of` iteration
 - 0.11.0 - expose `linkin()` method, new `findAtPosition`, `findPrevious` and `moveToPosition` methods
 - 0.10.3 - speed up by simplifying node layout
 - 0.10.2 - faster `pop`, `shift`

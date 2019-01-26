@@ -160,6 +160,11 @@ DList.prototype.reverse = function reverse( ) {
     function swapPrevNext(node) { var tmp = node.prev; node.prev = node.next; node.next = tmp }
 }
 
+try {
+    // load ES6 methods from a separate file to catch parse errors
+    require('./es6').setMethods(DList.prototype);
+} catch (err) {}
+
 DList.prototype = toStruct(DList.prototype);
 function toStruct( obj ) { return toStruct.prototype = obj }
 

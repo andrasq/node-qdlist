@@ -257,6 +257,34 @@ module.exports = {
         t.done();
     },
 
+    'findAtPosition': function(t) {
+        var list = qdlist();
+        t.strictEqual(list.findAtPosition(-1), null);
+        t.strictEqual(list.findAtPosition(0), null);
+        t.strictEqual(list.findAtPosition(100), null);
+
+        list = qdlist().fromArray([1]);
+        t.equal(list.findAtPosition(-1), null);
+        t.equal(list.findAtPosition(0).value, 1);
+        t.equal(list.findAtPosition(1), null);
+
+        list = qdlist().fromArray([1,2]);
+        t.equal(list.findAtPosition(-1), null);
+        t.equal(list.findAtPosition(0).value, 1);
+        t.equal(list.findAtPosition(1).value, 2);
+        t.equal(list.findAtPosition(2), null);
+
+        list = qdlist().fromArray([1,2,3]);
+        t.equal(list.findAtPosition(-1), null);
+        t.equal(list.findAtPosition(0).value, 1);
+        t.equal(list.findAtPosition(1).value, 2);
+        t.equal(list.findAtPosition(2).value, 3);
+        t.equal(list.findAtPosition(3), null);
+        t.equal(list.findAtPosition(100), null);
+
+        t.done();
+    },
+
     'findPrevious': function(t) {
         var list = qdlist();
         t.equal(list.findPrevious(-100), list);

@@ -99,10 +99,15 @@ DList.prototype.moveToHead = function moveToHead( node ) {
     return this.linkin(this, node);
 }
 
+DList.prototype.findAtPosition = function findPrevious( ix ) {
+    if (ix < 0) return null;
+    for (var node = this.next; --ix >= 0 && node != this; node = node.next) ;
+    return node === this ? null : node;
+}
+
 DList.prototype.findPrevious = function findPrevious( ix ) {
-    if (ix <= 0) return this;
-    for (var node = this.next; --ix > 0 && node != this; node = node.next) ;
-    return node === this ? this.prev : node;
+    var node = this.findAtPosition(ix);
+    return node ? node.prev : (ix <= 0 ? this : this.prev);
 }
 
 DList.prototype.moveToPosition = function moveToPosition( node, ix ) {

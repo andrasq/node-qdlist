@@ -7,6 +7,9 @@ Quicker doubly-linked list.
 
 Items are kept on a circular linked list, with the list itself being the terminal node.
 
+`qdlist` exposes its internal linked list manipulation functions to help build other fast
+data structures.
+
 
 API - List operations
 ---------------------
@@ -98,7 +101,12 @@ A node on the list has `node.next` set, when unlinked `node.next` is cleared.
 
 ### unlink( node )
 
-Remove the node from the list if linked.  Returns the node.
+Remove the node from the list if linked.  Returns the node with `.next` cleared.
+
+### linkin( previous, node )
+
+Insert `node` into the list to follow `previous`.  If the node is still on a list (`next`
+not falsy) it will be unlinked first.
 
 ### head( ),  tail( )
 
@@ -106,8 +114,8 @@ Return the first / last node on the list, or `undefined` if the list is empty.
 
 ### moveToHead( node ),  moveToTail( node )
 
-Move the given node to the head / tail of the list.  The node can be still on the list, else
-must be unlinked (with `next` cleared).
+Move the given node to the head / tail of the list.  These are just convenience functions
+that call `linkin()`
 
 ### forEach( handler(node) )
 
@@ -118,6 +126,7 @@ The values are accessible as `node.value` and `node.value2`.
 Changelog
 ---------
 
+- 0.11.0 - expose `linkin()` method
 - 0.10.3 - speed up by simplifying node layout
 - 0.10.2 - faster `pop`, `shift`
 - 0.10.1 - faster `toArray`

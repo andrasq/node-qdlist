@@ -84,18 +84,19 @@ DList.prototype.unlink = function unlink( node ) {
     return node.next ? nodeUnlink(node) : node;
 }
 
-DList.prototype.moveToTail = function moveToTail( node ) {
+DList.prototype.linkin = function linkin( parent, node ) {
     DList.prototype.unlink(node);
-    node.prev = this.prev;
-    node.next = this;
+    node.prev = parent;
+    node.next = parent.next;
     return nodeLinkin(node);
 }
 
+DList.prototype.moveToTail = function moveToTail( node ) {
+    return this.linkin(this.prev, node);
+}
+
 DList.prototype.moveToHead = function moveToHead( node ) {
-    DList.prototype.unlink(node);
-    node.prev = this;
-    node.next = this.next;
-    return nodeLinkin(node);
+    return this.linkin(this, node);
 }
 
 DList.prototype.head = function head( ) {

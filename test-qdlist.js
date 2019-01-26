@@ -212,6 +212,11 @@ module.exports = {
         t.done();
     },
 
+    'linkin': function(t) {
+        // fairly well tested by the other functions that are built on it
+        t.done();
+    },
+
     'isEmpty': function(t) {
         var l = qdlist();
         t.ok(l.isEmpty());

@@ -101,9 +101,10 @@ A node on the list has `node.next` set, when unlinked `node.next` is cleared.
 
 ### unlink( node )
 
-Remove the node from the list if linked.  Returns the node with `.next` cleared.
+Remove the node from the list it's on.  Returns the node with `.next` cleared.  Has no
+effect if the node is not on a list.
 
-### linkin( previous, node )
+### linkin( node, previous )
 
 Insert `node` into the list to follow `previous`.  If the node is still on a list (`next`
 not falsy) it will be unlinked first.
@@ -131,20 +132,20 @@ Return the node whose `.next` points to the `nth` node on the list.  Returns the
 as preceding the `0`-th node, and the tail node as preceding all `nth` past the end of the
 list.  This is a convenience function using `findPrevious`.
 
-    // insert `node` into the `list` at position `n`
-    const parent = list.findPrevious(n);
-    list.linkin(parent, node);
-
 ### moveToPosition( node, nth )
 
-Move the given node to be the `nth` item on the list.  This is a convenience function around
-`findPrevious()` and `linkin()`.
+Insert the given node to be the `nth` item on the list.  If there is no `nth` position, it
+will place the node as close as possible to `nth`, ie at the head or tail.  This is a
+convenience function around `findPrevious()` and `linkin()`.
 
 Note that when moving a node on the same list, the node is unlinked before finding the
 previous to `nth`, ie the positions are numbered without including the `node` being moved.
 This alaways leaves the node in position `n`, but not always with the the expected previous
 and next neighboring nodes.  For example, moving node A to position 2 in [0:A, B, 2:C, D]
 will result in [0:B, C, A, D].
+
+    // place the node at the nth position in the list
+    list.linkin(list.unlink(node), list.findPrevious(nth));
 
 ### forEach( handler(node) )
 

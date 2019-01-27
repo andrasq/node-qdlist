@@ -111,7 +111,7 @@ effect if the node is not on a list.
 
 ### linkin( node, previous )
 
-Insert `node` into the list to follow `previous`.  If the node is still on a list (`next`
+Insert `node` into the list to follow `previous`.  If the node is still on a list (`.next`
 not falsy) it will be unlinked first.
 
 ### head( ),  tail( )
@@ -163,7 +163,7 @@ The nodes on the list are also iterable with `for..of`.
 Changelog
 ---------
 
-- 0.12.0 - support `for..of` iteration, `qdlist.fromArray` builder
+- 0.12.0 - support `for..of` iteration, `qdlist.fromArray` factory
 - 0.11.0 - expose `linkin()` method, new `findAtPosition`, `findPrevious` and `moveToPosition` methods
 - 0.10.3 - speed up by simplifying node layout
 - 0.10.2 - faster `pop`, `shift`

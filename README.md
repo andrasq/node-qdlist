@@ -176,7 +176,7 @@ Changelog
 Todo
 ----
 
-- `toArray` offset,limit mode
+- `toArray` offset,limit options
 
 
 Related Work

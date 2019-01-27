@@ -135,7 +135,7 @@ runs in O(n) time.
 
 Return the node whose `.next` points to the `nth` node on the list.  Returns the list itself
 as preceding the `0`-th node, and the tail node as preceding all `nth` past the end of the
-list.  This is a convenience function using `findPrevious`.
+list.  This is a convenience function using `findAtPosition`.
 
 ### moveToPosition( node, nth )
 

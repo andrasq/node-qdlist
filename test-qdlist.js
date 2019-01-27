@@ -429,7 +429,7 @@ for (var j=0; j<5; j++) {
         for (var n=0; n<100; n++) l.push(n);
         var x;
         var t1 = Date.now();
-        // note: move the eval prevents optimization of this function and makes the tests run slow
+        // note: move the eval completely outside this function body else makes all tests run slow
         // eval("try { for (var n=0; n<1e6; n++) { for (var v of l) x = v.value; } } catch (e) {}");
         x = testIterateSpeed(l, 1e6);
         var t2 = Date.now();
@@ -443,14 +443,14 @@ for (var j=0; j<5; j++) {
         //console.log(l.head());
 
         t.done();
-
-        function testIterateSpeed(l, limit) {
-            var x;
-            // wrap the ES6 keyword `of` in an eval to avoid node-v0.10 crashing on the file
-            eval("try { for (var n=0; n<limit; n++) { for (var v of l) x = v.value; } } catch (e) {}");
-            return x;
-        }
     },
+}
+
+function testIterateSpeed(l, limit) {
+    var x;
+    // wrap the ES6 keyword `of` in an eval to avoid node-v0.10 crashing on the file
+    eval("try { for (var n=0; n<limit; n++) { for (var v of l) x = v.value; } } catch (e) {}");
+    return x;
 }
 
 function testIterate(list) {

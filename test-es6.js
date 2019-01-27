@@ -7,23 +7,31 @@
 
 var qdlist = require('./');
 
+function testIterate(list) {
+    var values = [];
+    try { eval("for (var node of list) values.push(node.value);") } catch (e) { return e }
+    return values;
+}
+
 module.exports = {
     'iterator': function(t) {
-        var list, values, node;
+        var list = qdlist(), values, node;
+
+        if (testIterate(list) instanceof Error) {
+            console.log("Iterators not supported on node version %s", process.version);
+            t.skip();
+        }
 
         list = qdlist();
-        values = [];
-        for (node of list) values.push(node.value);
+        values = testIterate(list);
         t.deepEqual(values, []);
 
-        list = qdlist().fromArray([1]);
-        values = [];
-        for (node of list) values.push(node.value);
+        list.fromArray([1]);
+        values = testIterate(list);
         t.deepEqual(values, [1]);
 
-        list = qdlist().fromArray([1, 2, 3, 4]);
-        values = [];
-        for (node of list) values.push(node.value);
+        list.fromArray([1, 2, 3, 4]);
+        values = testIterate(list);
         t.deepEqual(values, [1, 2, 3, 4]);
 
         t.done();

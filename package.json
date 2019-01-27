@@ -12,7 +12,7 @@
 
   "scripts": {
     "__note": "To run tests and coverage, `npm install -g qnit nyc`",
-    "test": "qnit test-*",
+    "test": "qnit test-qdlist.js",
     "coverage": "nyc -r text -r lcov env NODE_COVERAGE=Y npm test",
     "clean": "rm -rf .nyc_output/ coverage/ npm-debug.log"
   }

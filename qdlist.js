@@ -161,10 +161,25 @@ QDList.prototype.reverse = function reverse( ) {
     function swapPrevNext(node) { var tmp = node.prev; node.prev = node.next; node.next = tmp }
 }
 
-try {
-    // load ES6 methods from a separate file to catch parse errors
-    require('./es6').setMethods(QDList.prototype);
-} catch (err) {}
+// Convention: iterators that can be run only once return self,
+// those that can be run many times must return a new iterator each time.
+// The iterator object has a next() method that returns { value, done }.
+// It is faster to reuse the same object for the iterator return value too.
+QDList.prototype._iterator = function _iterator() {
+    var list = this;
+    var node = this;
+    return {
+        value: null,
+        done: false,
+        next: function() {
+            this.value = (node = node.next);
+            this.done = (node === list || !node);
+            return this;
+        }
+    }
+};
+// install the iterator as Symbol.iterator if the node version supports it
+try { eval("QDList.prototype[Symbol.iterator] = QDList.prototype._iterator;") } catch (e) {}
 
 QDList.prototype = toStruct(QDList.prototype);
 function toStruct( obj ) { return toStruct.prototype = obj }

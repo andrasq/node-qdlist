@@ -379,13 +379,36 @@ module.exports = {
         t.done();
     },
 
+    'iterator': function(t) {
+        var list = qdlist(), values, node;
+
+        if (testIterate(list) instanceof Error) {
+            console.log("Iterator test skipped, not supported by node version %s", process.version);
+            t.skip();
+        }
+
+        list = qdlist();
+        values = testIterate(list);
+        t.deepEqual(values, []);
+
+        list.fromArray([1]);
+        values = testIterate(list);
+        t.deepEqual(values, [1]);
+
+        list.fromArray([1, 2, 3, 4]);
+        values = testIterate(list);
+        t.deepEqual(values, [1, 2, 3, 4]);
+
+        t.done();
+    },
+
     'speed': function(t) {
         var l = qdlist();
         if (process.env.NODE_COVERAGE === 'Y') return t.skip();
         if (process.env.NODE_SPEED !== 'Y') return t.skip();
 
-for (var j=0; j<3; j++) {
-        // for reproducible results restrict to one core, eg `taskset 2 qnit test*`
+for (var j=0; j<5; j++) {
+        // for reproducible results restrict to one core, eg `taskset 2 env NODE_SPEED=Y qnit test*`
         var t1 = Date.now();
         for (var n=0; n<1e6; n++) {
             for (var i=0; i<10; i++) l.push(i);
@@ -401,6 +424,16 @@ for (var j=0; j<3; j++) {
         }
         var t2 = Date.now();
         console.log("1e7 push2/pop in %d ms", t2 - t1);
+
+        l.fromArray([]);
+        for (var n=0; n<100; n++) l.push(n);
+        var x;
+        var t1 = Date.now();
+        // note: move the eval prevents optimization of this function and makes the tests run slow
+        // eval("try { for (var n=0; n<1e6; n++) { for (var v of l) x = v.value; } } catch (e) {}");
+        x = testIterateSpeed(l, 1e6);
+        var t2 = Date.now();
+        console.log("1e6 100-long iterations in %d ms", t2 - t1);
 }
 
         // note: node-v8 12% speed penalty for using the two-value form (but 5% node-v10, and no% node-v5.8)
@@ -410,9 +443,18 @@ for (var j=0; j<3; j++) {
         //console.log(l.head());
 
         t.done();
+
+        function testIterateSpeed(l, limit) {
+            var x;
+            // wrap the ES6 keyword `of` in an eval to avoid node-v0.10 crashing on the file
+            eval("try { for (var n=0; n<limit; n++) { for (var v of l) x = v.value; } } catch (e) {}");
+            return x;
+        }
     },
 }
 
-try {
-    module.exports.es6 = require('./test-es6');
-} catch (err) {}
+function testIterate(list) {
+    var values = [];
+    try { eval("for (var node of list) values.push(node.value);") } catch (e) { return e }
+    return values;
+}

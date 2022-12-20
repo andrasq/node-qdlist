@@ -3,7 +3,7 @@
  *
  * Keeps nodes on a circular doubly-linked list, with the list itself also on the list.
  *
- * Copyright (C) 2019 Andras Radics
+ * Copyright (C) 2019,2022 Andras Radics
  * Licensed under the Apache License, Version  2.0.
  *
  * 2019-01-04 - AR.
@@ -93,11 +93,11 @@ QDList.prototype.linkin = function linkin( node, parent ) {
 }
 
 QDList.prototype.moveToTail = function moveToTail( node ) {
-    return this.linkin(node, this.prev);
+    return this.linkin(nodeUnlink(node), this.prev);
 }
 
 QDList.prototype.moveToHead = function moveToHead( node ) {
-    return this.linkin(node, this);
+    return this.linkin(nodeUnlink(node), this);
 }
 
 QDList.prototype.findAtPosition = function findPrevious( ix ) {
@@ -112,7 +112,7 @@ QDList.prototype.findPrevious = function findPrevious( ix ) {
 }
 
 QDList.prototype.moveToPosition = function moveToPosition( node, ix ) {
-    return this.linkin(this.unlink(node), this.findPrevious(ix));
+    return this.linkin(nodeUnlink(node), this.findPrevious(ix));
 }
 
 QDList.prototype.head = function head( ) {

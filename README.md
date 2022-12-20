@@ -163,6 +163,7 @@ The nodes on the list are also iterable with `for..of`.
 Changelog
 ---------
 
+- 0.12.1 - fix moveToTail/moveToHead of last/first element
 - 0.12.0 - support `for..of` iteration, `qdlist.fromArray` factory
 - 0.11.0 - expose `linkin()` method, new `findAtPosition`, `findPrevious` and `moveToPosition` methods
 - 0.10.3 - speed up by simplifying node layout

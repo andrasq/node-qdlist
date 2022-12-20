@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2019 Andras Radics
+ * Copyright (C) 2019,2022 Andras Radics
  * Licensed under the Apache License, Version  2.0.
  */
 
@@ -52,15 +52,12 @@ module.exports = {
         t.equal(l.prev.value, 3);       // tail
 
         l.unshift(2);
-        t.equal(l.next.value, 2);
-        t.equal(l.next.next.value, 3);
-        t.equal(l.prev.value, 3);
+        t.deepEqual([l.next.value, l.next.next.value], [2, 3]);
+        t.deepEqual([l.prev.value, l.prev.prev.value], [3, 2]);
 
         l.unshift(1);
-        t.equal(l.next.value, 1);
-        t.equal(l.next.next.value, 2);
-        t.equal(l.next.next.next.value, 3);
-        t.equal(l.prev.value, 3);
+        t.deepEqual([l.next.value, l.next.next.value, l.next.next.next.value], [1, 2, 3]);
+        t.deepEqual([l.prev.value, l.prev.prev.value, l.prev.prev.prev.value], [3, 2, 1]);
 
         t.done();
     },
@@ -249,10 +246,14 @@ module.exports = {
         l.unshift(3);
         l.unshift(2);
         l.unshift(1);
+        t.deepEqual([l.next.value, l.next.next.value, l.next.next.next.value], [1, 2, 3]);
+        l.moveToTail(l.tail());
+        t.deepEqual([l.next.value, l.next.next.value, l.next.next.next.value], [1, 2, 3]);
         t.equal(l.head().value, 1);
         l.moveToTail(l.head());
         t.equal(l.head().value, 2);
         t.equal(l.tail().value, 1);
+        l.moveToTail(l.tail());
         t.done();
     },
 
@@ -262,6 +263,9 @@ module.exports = {
         l.push(1);
         l.push(2);
         l.push(3);
+        t.deepEqual([l.next.value, l.next.next.value, l.next.next.next.value], [1, 2, 3]);
+        l.moveToHead(l.head());
+        t.deepEqual([l.next.value, l.next.next.value, l.next.next.next.value], [1, 2, 3]);
         t.equal(l.head().value, 1);
         l.moveToHead(l.tail());
         t.equal(l.head().value, 3);
